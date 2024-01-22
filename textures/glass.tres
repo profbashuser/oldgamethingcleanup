@@ -1,0 +1,13 @@
+[gd_resource type="StandardMaterial3D" format=3 uid="uid://djhkm3v6k4s5"]
+
+[resource]
+shading_mode = 2
+albedo_color = Color(0.509804, 0.745098, 1, 0.0980392)
+metallic = 0.45
+roughness = 0.05
+refraction_enabled = true
+refraction_scale = 0.02
+texture_filter = 0
+texture_repeat = false
+distance_fade_min_distance = 25.0
+distance_fade_max_distance = 0.0

@@ -1,0 +1,14 @@
+[remap]
+
+importer="qodot.map"
+type="Resource"
+uid="uid://c3357715vq41d"
+path="res://.godot/imported/2-worldspawn-layers.map-ceec656f2cdd579d9133b59294fd7b7f.tres"
+
+[deps]
+
+source_file="res://src/addons/qodot/example_scenes/1-interactivity/2-worldspawn-layers/2-worldspawn-layers.map"
+dest_files=["res://.godot/imported/2-worldspawn-layers.map-ceec656f2cdd579d9133b59294fd7b7f.tres"]
+
+[params]
+

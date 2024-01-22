@@ -1,0 +1,373 @@
+[gd_scene load_steps=25 format=3 uid="uid://1nksmwa46so0"]
+
+[ext_resource type="Script" path="res://src/Player.cs" id="1_6ydxd"]
+[ext_resource type="Script" path="res://src/Hand.gd" id="2_pwbpx"]
+[ext_resource type="Script" path="res://src/Hud.gd" id="3_8ohnq"]
+[ext_resource type="Theme" uid="uid://camxobw6l2flb" path="res://assets/ui_theme.tres" id="3_lnsp4"]
+[ext_resource type="Script" path="res://src/guns/Wrench.gd" id="3_vgdmm"]
+[ext_resource type="Script" path="res://src/guns/Shotgun.gd" id="3_vrhi2"]
+[ext_resource type="Script" path="res://src/guns/Rifle.gd" id="5_wxstm"]
+[ext_resource type="Texture2D" uid="uid://dqgacv8dn245k" path="res://assets/Crosshair.png" id="9_eymbc"]
+[ext_resource type="Shader" path="res://src/shaders/crosshair.gdshader" id="9_lmfoi"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_gkq50"]
+height = 1.0
+
+[sub_resource type="Animation" id="Animation_1wh22"]
+resource_name = "ATK"
+length = 0.8
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.06, 0.8),
+"transitions": PackedFloat32Array(2.07053, 5.65685, 1),
+"update": 0,
+"values": [Vector3(0, -0.4, -0.6), Vector3(0, -0.4, -0.355), Vector3(0, -0.4, -0.6)]
+}
+
+[sub_resource type="Animation" id="Animation_mgymr"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, -0.4, -0.6)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_5bdqm"]
+_data = {
+"ATK": SubResource("Animation_1wh22"),
+"RESET": SubResource("Animation_mgymr")
+}
+
+[sub_resource type="BoxMesh" id="BoxMesh_7jxsg"]
+size = Vector3(0.05, 0.55, 0.05)
+
+[sub_resource type="Animation" id="Animation_lqu27"]
+resource_name = "ATK"
+length = 0.8
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Head/Camera3D/Hand/Wrench:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.4, 0.6, 0.8),
+"transitions": PackedFloat32Array(0.210224, 2.73208, 1, 3.36359),
+"update": 0,
+"values": [Vector3(0.3, -0.375, -0.5), Vector3(1, 0.12, -0.35), Vector3(0.6, -0.375, -1), Vector3(0.3, -0.375, -0.5)]
+}
+
+[sub_resource type="Animation" id="Animation_eo3td"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Head/Camera3D/Hand/Wrench:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0.3, -0.375, -0.5)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_wsqsy"]
+_data = {
+"ATK": SubResource("Animation_lqu27"),
+"RESET": SubResource("Animation_eo3td")
+}
+
+[sub_resource type="BoxMesh" id="BoxMesh_lsek1"]
+size = Vector3(0.1, 0.15, 1)
+
+[sub_resource type="Animation" id="Animation_wjvmr"]
+resource_name = "ATK"
+length = 0.09
+step = 0.01
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Head/Camera3D/Hand/Rifle:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.02, 0.09),
+"transitions": PackedFloat32Array(1, 0.203063, 10.1965),
+"update": 0,
+"values": [Vector3(0.4, -0.4, -0.3), Vector3(0.4, -0.4, -0.14), Vector3(0.4, -0.4, -0.3)]
+}
+
+[sub_resource type="Animation" id="Animation_1xnig"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Head/Camera3D/Hand/Rifle:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0.4, -0.4, -0.3)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_sgw8h"]
+_data = {
+"ATK": SubResource("Animation_wjvmr"),
+"RESET": SubResource("Animation_1xnig")
+}
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_k7bfk"]
+shader = ExtResource("9_lmfoi")
+shader_parameter/isEnabled = false
+
+[sub_resource type="GDScript" id="GDScript_t5kc7"]
+script/source = "extends Node3D
+
+var velp
+var dirp
+
+var pvel
+var pdir
+
+
+func _process(_delta: float) -> void:
+	if velp != null:
+		velp.queue_free()
+	velp = Draw3d.line(
+		global_position,
+		global_position + get_parent().velocity.limit_length(1),
+		Color.BLUE,
+		true
+	)
+
+	if dirp != null:
+		dirp.queue_free()
+	dirp = Draw3d.line(
+		global_position,
+		global_position + get_parent().direction.normalized(),
+		Color.RED,
+		true
+	)
+
+	var thng = [
+		\"FPS:%s\" % Engine.get_frames_per_second(),
+		\"SPEED:%s\" % fround(get_parent()._Velocity.length(),1),
+		\"HEALTH:%s/%s\" % [round(get_parent().Health), get_parent().Max_hp],
+	]
+	$Label.text=\"\"
+	for i in thng:
+		$Label.text += (\"%s\\n\" % i).to_lower();
+
+func fround(x, n):
+	n = pow(10, n)
+	x = x * n
+	if x >= 0: x = floor(x + 0.5)
+	else: x = ceil(x - 0.5)
+	return x / n
+
+func _on_tree_exited() -> void:
+	if velp != null:
+		velp.queue_free()
+	if dirp != null:
+		dirp.queue_free()
+"
+
+[sub_resource type="SeparationRayShape3D" id="SeparationRayShape3D_wbdql"]
+margin = 1.0
+
+[node name="CharacterBody3D" type="CharacterBody3D" groups=["Player"]]
+floor_constant_speed = true
+script = ExtResource("1_6ydxd")
+
+[node name="CollisionSH" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+shape = SubResource("CylinderShape3D_gkq50")
+
+[node name="Head" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6, 0)
+
+[node name="Camera3D" type="Camera3D" parent="Head"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.4, 0)
+current = true
+fov = 1.0
+
+[node name="AimCast" type="RayCast3D" parent="Head/Camera3D"]
+target_position = Vector3(0, 0, -100)
+
+[node name="Hand" type="Node3D" parent="Head/Camera3D"]
+script = ExtResource("2_pwbpx")
+sway_left = Vector3(0.05, 0, 0)
+sway_right = Vector3(-0.05, 0, 0)
+
+[node name="Shotgun" type="Node3D" parent="Head/Camera3D/Hand"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.4, -0.6)
+script = ExtResource("3_vrhi2")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Head/Camera3D/Hand/Shotgun"]
+libraries = {
+"": SubResource("AnimationLibrary_5bdqm")
+}
+
+[node name="Container" type="Node3D" parent="Head/Camera3D/Hand/Shotgun"]
+transform = Transform3D(7.45057e-09, -0.659999, 1.10806e-07, 0.659999, -1.11759e-08, 5.86518e-08, 9.52811e-10, 1.18257e-07, 0.659999, 0, 0, 0)
+
+[node name="AimCast" type="RayCast3D" parent="Head/Camera3D/Hand/Shotgun/Container"]
+target_position = Vector3(0, 0, -100)
+
+[node name="AimCast2" type="RayCast3D" parent="Head/Camera3D/Hand/Shotgun/Container"]
+target_position = Vector3(0, 0, -100)
+
+[node name="AimCast3" type="RayCast3D" parent="Head/Camera3D/Hand/Shotgun/Container"]
+target_position = Vector3(0, 0, -100)
+
+[node name="AimCast4" type="RayCast3D" parent="Head/Camera3D/Hand/Shotgun/Container"]
+target_position = Vector3(0, 0, -100)
+
+[node name="AimCast5" type="RayCast3D" parent="Head/Camera3D/Hand/Shotgun/Container"]
+target_position = Vector3(0, 0, -100)
+
+[node name="AimCast6" type="RayCast3D" parent="Head/Camera3D/Hand/Shotgun/Container"]
+target_position = Vector3(0, 0, -100)
+
+[node name="AimCast7" type="RayCast3D" parent="Head/Camera3D/Hand/Shotgun/Container"]
+target_position = Vector3(0, 0, -100)
+
+[node name="Wrench" type="MeshInstance3D" parent="Head/Camera3D/Hand"]
+transform = Transform3D(0.688355, -0.725374, 0, 0.725374, 0.688355, 0, 0, 0, 1, 0.3, -0.375, -0.5)
+mesh = SubResource("BoxMesh_7jxsg")
+script = ExtResource("3_vgdmm")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Head/Camera3D/Hand/Wrench"]
+root_node = NodePath("../../../../..")
+libraries = {
+"": SubResource("AnimationLibrary_wsqsy")
+}
+
+[node name="Rifle" type="MeshInstance3D" parent="Head/Camera3D/Hand"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.4, -0.4, -0.3)
+mesh = SubResource("BoxMesh_lsek1")
+script = ExtResource("5_wxstm")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Head/Camera3D/Hand/Rifle"]
+root_node = NodePath("../../../../..")
+libraries = {
+"": SubResource("AnimationLibrary_sgw8h")
+}
+
+[node name="Hud" type="Control" parent="Head/Camera3D"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("3_8ohnq")
+
+[node name="WeaponLabel" type="Label" parent="Head/Camera3D/Hud"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -227.0
+offset_top = -84.0
+offset_right = -24.0
+offset_bottom = -23.0
+grow_horizontal = 0
+grow_vertical = 0
+theme = ExtResource("3_lnsp4")
+theme_override_font_sizes/font_size = 56
+text = "WRENCH"
+
+[node name="HealthBar" type="ProgressBar" parent="Head/Camera3D/Hud"]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 20.0
+offset_top = -44.0
+offset_right = 360.0
+offset_bottom = -14.0
+grow_vertical = 0
+theme = ExtResource("3_lnsp4")
+value = 50.0
+rounded = true
+show_percentage = false
+
+[node name="HealthLabel" type="Label" parent="Head/Camera3D/Hud/HealthBar"]
+layout_mode = 1
+offset_left = 14.0
+offset_top = -38.0
+offset_right = 94.0
+offset_bottom = -5.0
+theme_override_font_sizes/font_size = 34
+text = "100%"
+
+[node name="CrossHair" type="TextureRect" parent="Head/Camera3D/Hud"]
+material = SubResource("ShaderMaterial_k7bfk")
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("9_eymbc")
+
+[node name="SpeedLabel" type="Label" parent="Head/Camera3D/Hud"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -20.0
+offset_top = -40.0
+offset_right = 20.0
+offset_bottom = -17.0
+grow_horizontal = 2
+grow_vertical = 0
+theme = ExtResource("3_lnsp4")
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 4
+text = "123"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Debug" type="Node3D" parent="."]
+script = SubResource("GDScript_t5kc7")
+
+[node name="Label" type="Label" parent="Debug"]
+visible = false
+offset_right = 47.0
+offset_bottom = 26.0
+theme = ExtResource("3_lnsp4")
+text = "FPS:1"
+
+[node name="StairCast" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0)
+shape = SubResource("SeparationRayShape3D_wbdql")
+
+[connection signal="gunSwitch" from="." to="Head/Camera3D/Hud" method="_on_character_body_3d_gun_switch"]
+[connection signal="tree_exited" from="Debug" to="Debug" method="_on_tree_exited"]

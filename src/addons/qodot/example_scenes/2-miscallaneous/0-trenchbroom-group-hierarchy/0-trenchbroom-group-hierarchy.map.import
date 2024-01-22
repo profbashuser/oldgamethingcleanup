@@ -1,0 +1,14 @@
+[remap]
+
+importer="qodot.map"
+type="Resource"
+uid="uid://bf0p15s25cjvr"
+path="res://.godot/imported/0-trenchbroom-group-hierarchy.map-a0708c495b37ff088e85d199c6e73401.tres"
+
+[deps]
+
+source_file="res://src/addons/qodot/example_scenes/2-miscallaneous/0-trenchbroom-group-hierarchy/0-trenchbroom-group-hierarchy.map"
+dest_files=["res://.godot/imported/0-trenchbroom-group-hierarchy.map-a0708c495b37ff088e85d199c6e73401.tres"]
+
+[params]
+

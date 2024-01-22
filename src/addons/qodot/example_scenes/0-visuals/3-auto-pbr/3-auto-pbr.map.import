@@ -1,0 +1,14 @@
+[remap]
+
+importer="qodot.map"
+type="Resource"
+uid="uid://brjxukc2odk2u"
+path="res://.godot/imported/3-auto-pbr.map-ede0d343056deabc9d10852af1339422.tres"
+
+[deps]
+
+source_file="res://src/addons/qodot/example_scenes/0-visuals/3-auto-pbr/3-auto-pbr.map"
+dest_files=["res://.godot/imported/3-auto-pbr.map-ede0d343056deabc9d10852af1339422.tres"]
+
+[params]
+

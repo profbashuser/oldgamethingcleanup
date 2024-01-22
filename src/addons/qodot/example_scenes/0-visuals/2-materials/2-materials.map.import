@@ -1,0 +1,14 @@
+[remap]
+
+importer="qodot.map"
+type="Resource"
+uid="uid://8wksi302idok"
+path="res://.godot/imported/2-materials.map-9685111ae8dd400dbca69b60314fc7eb.tres"
+
+[deps]
+
+source_file="res://src/addons/qodot/example_scenes/0-visuals/2-materials/2-materials.map"
+dest_files=["res://.godot/imported/2-materials.map-9685111ae8dd400dbca69b60314fc7eb.tres"]
+
+[params]
+

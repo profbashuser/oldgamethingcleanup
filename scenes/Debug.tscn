@@ -1,0 +1,69 @@
+[gd_scene load_steps=5 format=3 uid="uid://d01y4kfm0jd52"]
+
+[ext_resource type="Script" path="res://src/debug/Debug.gd" id="1_he3y5"]
+[ext_resource type="Script" path="res://src/debug/Console.gd" id="1_oxoah"]
+[ext_resource type="Theme" uid="uid://camxobw6l2flb" path="res://assets/ui_theme.tres" id="2_nlf8p"]
+[ext_resource type="Script" path="res://src/Debug/command_handler.gd" id="3_j8jxr"]
+
+[node name="Debug" type="CanvasLayer"]
+process_mode = 3
+script = ExtResource("1_he3y5")
+
+[node name="Label" type="Label" parent="."]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_vertical = 1
+theme = ExtResource("2_nlf8p")
+theme_override_font_sizes/font_size = 25
+text = "FPS:1"
+
+[node name="Console" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("2_nlf8p")
+script = ExtResource("1_oxoah")
+
+[node name="Window" type="ColorRect" parent="Console"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.235294, 0.235294, 0.235294, 0.627451)
+
+[node name="ConsoleLabel" type="Label" parent="Console/Window"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 8
+size_flags_vertical = 0
+theme = ExtResource("2_nlf8p")
+
+[node name="LineEdit" type="LineEdit" parent="Console/Window"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -19.0
+grow_horizontal = 2
+grow_vertical = 0
+theme = ExtResource("2_nlf8p")
+placeholder_text = "command"
+
+[node name="Handle" type="Node" parent="Console/Window"]
+script = ExtResource("3_j8jxr")
+
+[connection signal="text_submitted" from="Console/Window/LineEdit" to="Console" method="_on_input_text_entered"]

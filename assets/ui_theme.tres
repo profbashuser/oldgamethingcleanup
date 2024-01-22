@@ -1,0 +1,17 @@
+[gd_resource type="Theme" load_steps=4 format=3 uid="uid://camxobw6l2flb"]
+
+[ext_resource type="FontFile" uid="uid://bmbxrnt2f2cr3" path="res://assets/VCR_OSD_MONO.ttf" id="1_7lvu0"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qf6k5"]
+bg_color = Color(0, 0, 0, 0.0980392)
+skew = Vector2(0.4, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_b5tiv"]
+bg_color = Color(1, 1, 1, 1)
+skew = Vector2(0.4, 0)
+
+[resource]
+default_font = ExtResource("1_7lvu0")
+Label/fonts/font = ExtResource("1_7lvu0")
+ProgressBar/styles/background = SubResource("StyleBoxFlat_qf6k5")
+ProgressBar/styles/fill = SubResource("StyleBoxFlat_b5tiv")

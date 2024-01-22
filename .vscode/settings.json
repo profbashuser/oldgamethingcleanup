@@ -1,0 +1,6 @@
+{
+    "files.exclude": {
+        "addons":true,
+        "**/**.import":true
+    }
+}

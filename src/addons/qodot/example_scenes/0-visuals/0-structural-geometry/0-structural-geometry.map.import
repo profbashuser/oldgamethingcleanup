@@ -1,0 +1,14 @@
+[remap]
+
+importer="qodot.map"
+type="Resource"
+uid="uid://epxqm4vl2paq"
+path="res://.godot/imported/0-structural-geometry.map-d835325cf8956134af319a02cb0b559c.tres"
+
+[deps]
+
+source_file="res://src/addons/qodot/example_scenes/0-visuals/0-structural-geometry/0-structural-geometry.map"
+dest_files=["res://.godot/imported/0-structural-geometry.map-d835325cf8956134af319a02cb0b559c.tres"]
+
+[params]
+
